@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://instantdeceived.com/3c/35/69/3c356948c2219177b7f05f519fc204fc.js"></script>
+    
+   <script src="https://quge5.com/88/tag.min.js" data-zone="195717" async data-cfasync="false"></script>
+    <script>(function(s){s.dataset.zone='10369011',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HiCine Premium</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#0f0f0f;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:14px;
+  background:#000;
+  color:#e50914;
+  font-size:22px;
+  font-weight:bold;
+  box-shadow:0 2px 10px rgba(0,0,0,.6);
+}
+
+/* SEARCH */
+.search-box{
+  padding:12px;
+  text-align:center;
+}
+.search-box input{
+  width:92%;
+  max-width:420px;
+  padding:12px 16px;
+  border-radius:30px;
+  border:none;
+  outline:none;
+}
+
+/* ===== MOVIES GRID (ALWAYS 3 PER ROW) ===== */
+#moviesGrid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:10px;
+  padding:10px;
+}
+
+/* POSTER CARD */
+.movie{
+  position:relative;
+  padding:3px;
+  border-radius:14px;
+  cursor:pointer;
+}
+
+/* PREMIUM GRADIENT BORDER */
+.movie::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  padding:2px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#ff004c,#ff9f00,#00ffd5,#7a00ff);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+}
+
+.movie img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:12px;
+  display:block;
+}
+
+.movie h3{
+  font-size:12px;
+  padding:6px 4px;
+  text-align:center;
+  background:#000;
+  border-radius:0 0 12px 12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* ===== DETAILS PAGE ===== */
+#details{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:none;
+  z-index:999;
+  overflow-y:auto;
+}
+
+.details-header{
+  height:260px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+}
+.details-header::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,transparent,#000);
+}
+
+.close{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#111;
+  padding:8px 12px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:10;
+}
+
+.details-title{
+  position:absolute;
+  bottom:15px;
+  left:15px;
+}
+.details-title h2{
+  font-size:18px;
+}
+.details-title p{
+  font-size:12px;
+  opacity:.7;
+}
+
+/* NOTE */
+.note{
+  background:#111;
+  padding:10px;
+  text-align:center;
+  font-size:12px;
+}
+
+/* TABS */
+.tabs{
+  display:flex;
+}
+.tabs button{
+  flex:1;
+  padding:10px;
+  background:none;
+  border:none;
+  color:#aaa;
+  font-size:13px;
+}
+.tabs .active{
+  color:#fff;
+  border-bottom:2px solid #e50914;
+}
+
+/* TAB CONTENT */
+.tab-content{
+  padding:12px;
+}
+
+/* DOWNLOAD CARD */
+.file{
+  background:#111;
+  padding:10px;
+  border-radius:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+.file-title{
+  font-size:12px;
+}
+.badges span{
+  background:#222;
+  padding:3px 6px;
+  border-radius:12px;
+  font-size:10px;
+  margin-right:5px;
+}
+.download{
+  background:#e50914;
+  padding:6px 14px;
+  border-radius:20px;
+  color:#fff;
+  text-decoration:none;
+  font-size:12px;
+}
+
+.preview-img{
+  width:100%;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>CineAura</header>
+
+<div class="search-box">
+  <input type="text" id="search" placeholder="Search movies...">
+</div>
+
+<div id="moviesGrid"></div>
+
+<!-- DETAILS PAGE -->
+<div id="details">
+  <div class="details-header" id="detailsBg">
+    <div class="close" id="closeBtn">✕</div>
+    <div class="details-title">
+      <h2 id="dTitle"></h2>
+      <p id="dUpdated"></p>
+    </div>
+  </div>
+
+  <div class="note">Use <b>VLC Media Player</b> for best experience</div>
+
+  <div class="tabs">
+    <button class="active" onclick="switchTab(0)">Download</button>
+    <button onclick="switchTab(1)">Details</button>
+    <button onclick="switchTab(2)">Preview</button>
+  </div>
+
+  <div class="tab-content" id="tabContent"></div>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAMsHs-cacgTKOueZidurWopAmMGd_GsCg",
+  authDomain:"appstore-c541d.firebaseapp.com",
+  projectId:"appstore-c541d"
+});
+const db=firebase.firestore();
+
+const grid=document.getElementById("moviesGrid");
+const details=document.getElementById("details");
+const tabContent=document.getElementById("tabContent");
+
+let allMovies=[];
+let currentMovie=null;
+let currentTab=0;
+
+/* LOAD MOVIES - LATEST FIRST */
+async function loadMovies(){
+  grid.innerHTML="";
+  try {
+    const snap = await db.collection("movies").get();
+    allMovies=[];
+    snap.forEach(doc=>{
+      const m={id:doc.id,...doc.data()};
+      allMovies.push(m);
+    });
+
+    // SORT LATEST ADD OR UPDATE FIRST
+    allMovies.sort((a,b)=>{
+      const t1 = a.updatedAt?.seconds || 0;
+      const t2 = b.updatedAt?.seconds || 0;
+      return t2 - t1; // latest first
+    });
+
+    allMovies.forEach(renderMovie);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+/* RENDER MOVIE */
+function renderMovie(m){
+  const div=document.createElement("div");
+  div.className="movie";
+  div.innerHTML=`
+    <img src="${m.poster}">
+    <h3 title="${m.title}">${m.title}</h3>
+  `;
+  div.onclick=()=>openDetails(m);
+  grid.appendChild(div);
+}
+
+/* OPEN DETAILS */
+function openDetails(m){
+  currentMovie=m;
+  details.style.display="block";
+  history.pushState({page:"details"},"","#details");
+  document.getElementById("detailsBg").style.backgroundImage=`url(${m.bg||m.poster})`;
+  document.getElementById("dTitle").textContent=m.title;
+  document.getElementById("dUpdated").textContent="Updated on "+(m.updated||"");
+  switchTab(0);
+}
+
+/* TABS */
+function switchTab(i){
+  currentTab=i;
+  document.querySelectorAll(".tabs button").forEach((b,idx)=>{
+    b.classList.toggle("active",idx===i);
+  });
+  renderTab();
+}
+
+function renderTab(){
+  tabContent.innerHTML="";
+  if(!currentMovie) return;
+
+  if(currentTab===0){
+    (currentMovie.downloads||[]).forEach(d=>{
+      tabContent.innerHTML+=`
+      <div class="file">
+        <div>
+          <div class="file-title">${d.info}</div>
+          <div class="badges">
+            <span>${d.size||""}</span>
+            <span>${d.codec||""}</span>
+          </div>
+        </div>
+        <a class="download" href="${d.url}" target="_blank">Download</a>
+      </div>`;
+    });
+  }
+  else if(currentTab===1){
+    tabContent.innerHTML=`
+      <p><b>Plot:</b> ${currentMovie.plot||"N/A"}</p>
+      <p><b>Rating:</b> ${currentMovie.rating||"N/A"}</p>
+      <p><b>Cast:</b> ${currentMovie.cast||"N/A"}</p>
+      <p><b>Genres:</b> ${currentMovie.genres||"N/A"}</p>`;
+  }
+  else{
+    if(currentMovie.preview)
+      tabContent.innerHTML=`<img src="${currentMovie.preview}" class="preview-img">`;
+    else tabContent.innerHTML="<p>No preview available</p>";
+  }
+}
+
+/* CLOSE + BACK + RELOAD */
+function closeDetails(){
+  details.style.display="none";
+  history.replaceState(null,"",location.pathname);
+  setTimeout(()=>location.reload(),100);
+}
+document.getElementById("closeBtn").onclick=closeDetails;
+
+window.onpopstate=()=>{
+  if(details.style.display==="block"){
+    details.style.display="none";
+    setTimeout(()=>location.reload(),100);
+  }
+};
+
+/* LIVE SEARCH */
+document.getElementById("search").oninput=e=>{
+  const v=e.target.value.toLowerCase();
+  grid.innerHTML="";
+  allMovies.filter(m=>m.title.toLowerCase().includes(v)).forEach(renderMovie);
+};
+
+/* INIT */
+loadMovies();
+</script>
+
+</body>
+</html>
